@@ -9,11 +9,34 @@
 #The only thing we will do is to save the code and reload
 #the page(the path of this page is given in the terminal)
 from fastapi import FastAPI,Path
+from typing import List
+from models import User,Gender,Role
+from uuid import UUID,uuid4
 app=FastAPI()
+#--------------------------------------
+#This is our database
+db: List[User]=[
+    User(id==uuid4(),
+    first_name="Umer",
+    last_name="Zeeshan",
+    gender=Gender.male,
+    roles=[Role.student,Role.admin]
+    ),
+    User(id==uuid4(),
+    first_name="Ammar",
+    last_name="Zeeshan",
+    gender=Gender.male,
+    roles=[Role.student]
+    ),
+]
+#--------------------------------------
 @app.get("/")
 def root():
     return {"Hello": "World",
     "welcome" : "umer"}
+@app.get("/api/v1/users")
+async def fetch_users():
+    return db
 #----------------------------------------------------------
 #http defines some request methods
 #also known as HTTP verbs 
@@ -33,6 +56,9 @@ def root():
 #and when we use the await command then we wait for the promise to resolve
 #Now,when we get the response then we put the response of that promise in the variable
 #------------------------------------------------------------------------
-#Now, we have created a user model named as models.py
-#------------------------------------------------------------------------
-#We will store the users in the database
+#STEPS:
+#1)Now, we have created a user model named as models.py
+#2)We will store the users in the database
+#3)now the client will send the get request from any source then 
+#we will use Fastapi to send the data that we have stored in our list(database)
+#For this we set a get request
