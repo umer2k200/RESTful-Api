@@ -28,6 +28,12 @@ db: List[User]=[
     gender=Gender.male,
     roles=[Role.student]
     ),
+    User(id=uuid4(),
+    first_name="Muhammad",
+    last_name="Zeeshan",
+    middle_name=None,
+    gender=Gender.male,
+    roles=[Role.user,Role.student])
 ]
 #--------------------------------------
 @app.get("/")
@@ -115,3 +121,12 @@ async def delete_user(user_id:UUID):
 #    ->http://127.0.0.1:8000/redoc (this one is not interactive so we should use the above ones)
 #point to be noted:: searching for a path that we have not defined will giver you nothing.
 #5)WE can also delete an entity from our database through our api
+#--------------------------------------------------------------------------------------------------
+#now we'll work on the autrhentication of the users
+#
+from fastapi import status
+from fastapi.responses import RedirectResponse
+
+#from utils import get_hashed_pass
+from uuid import uuid4
+
